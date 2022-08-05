@@ -7,6 +7,7 @@ import africa.semicolon.blogClone.dtos.requests.UserLoginRequest;
 import africa.semicolon.blogClone.dtos.responses.LoginUserResponse;
 import africa.semicolon.blogClone.dtos.responses.RegisterUserResponse;
 import africa.semicolon.blogClone.exceptions.BlogCloneErrorException;
+import africa.semicolon.blogClone.exceptions.UserAlreadyExit;
 import africa.semicolon.blogClone.exceptions.WrongLoginDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,13 +28,23 @@ public class UserServicesImpl implements UserService{
 
     @Override
     public RegisterUserResponse registerUser(RegisterUserRequest request) {
+        validateUserEmailRegister(request.getEmail());
+
         User user = new User();
+
         user.setUserName(request.getEmail());
         user.setPassword(request.getPassword());
         userRepository.save(user);
         RegisterUserResponse response = new RegisterUserResponse();
         response.setMessage(String.format("%s successfully registered", request.getEmail()));
         return response;
+    }
+
+    private void validateUserEmailRegister(String registerUserEmail) {
+        User savedUser = userRepository.findUserByUserName(registerUserEmail);
+        if(savedUser != null)
+            throw new UserAlreadyExit(String.format("User %s already exists", registerUserEmail));
+
     }
 
     @Override

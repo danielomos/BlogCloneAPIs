@@ -5,16 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19a46cfb-add5-4ebc-adfe-a5cead2e9108" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/dtos/requests/UserLoginRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/dtos/responses/LoginUserResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/exceptions/BlogCloneErrorException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/exceptions/WrongLoginDetails.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/exceptions/UserAlreadyExit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/data/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/data/repositories/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/data/models/Blog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/data/models/Blog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/UserServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/UserServicesImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/africa/semicolon/blogClone/services/UserServicesImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/africa/semicolon/blogClone/services/UserServicesImplTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +70,7 @@
       <recent name="africa.semicolon.blogClone.data.repositories" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.UserServicesImplTest.registerUserCanLogin">
+  <component name="RunManager" selected="Spring Boot.Main">
     <configuration name="UserRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="blogClone" />
       <extension name="coverage">
@@ -153,8 +148,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.UserServicesImplTest.registerUserCanLogin" />
         <item itemvalue="Spring Boot.Main" />
+        <item itemvalue="JUnit.UserServicesImplTest.registerUserCanLogin" />
         <item itemvalue="JUnit.UserServicesImplTest" />
         <item itemvalue="JUnit.UserServicesImplTest.registerUser_repositorySizeIsOneTest" />
         <item itemvalue="JUnit.UserRepositoryTest" />
@@ -175,6 +170,7 @@
       <workItem from="1659637342802" duration="8675000" />
       <workItem from="1659672710397" duration="1634000" />
       <workItem from="1659674797706" duration="3761000" />
+      <workItem from="1659691214708" duration="2308000" />
     </task>
     <servers />
   </component>
