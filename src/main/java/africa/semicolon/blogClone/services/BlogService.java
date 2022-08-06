@@ -8,4 +8,5 @@ public interface BlogService {
     public Blog saveBlog(Blog blog);
 
 
+    Blog getUserBlog(String id);
 }

@@ -1,11 +1,14 @@
 package africa.semicolon.blogClone.services;
 
+import africa.semicolon.blogClone.data.models.Article;
 import africa.semicolon.blogClone.data.models.Blog;
 import africa.semicolon.blogClone.data.models.User;
 import africa.semicolon.blogClone.data.repositories.UserRepository;
+import africa.semicolon.blogClone.dtos.requests.AddArticleRequest;
 import africa.semicolon.blogClone.dtos.requests.AddBlogRequest;
 import africa.semicolon.blogClone.dtos.requests.RegisterUserRequest;
 import africa.semicolon.blogClone.dtos.requests.UserLoginRequest;
+import africa.semicolon.blogClone.dtos.responses.AddAArticleResponse;
 import africa.semicolon.blogClone.dtos.responses.AddBlogResponse;
 import africa.semicolon.blogClone.dtos.responses.LoginUserResponse;
 import africa.semicolon.blogClone.dtos.responses.RegisterUserResponse;
@@ -21,12 +24,13 @@ import java.util.List;
 
 @Service
 public class UserServicesImpl implements UserService{
-
+    @Autowired
+    private ArticleService articleService;
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    BlogService blogService;
+    private BlogService blogService;
 
     @Override
     public RegisterUserResponse registerUser(RegisterUserRequest request) {
@@ -42,12 +46,7 @@ public class UserServicesImpl implements UserService{
         return response;
     }
 
-//    private void validateUserEmailRegister( <?> element) {
-//        User savedUser = userRepository.findUserByUserName(element);
-//        if(savedUser != null)
-//            throw new UserAlreadyExit(String.format("User %s already exists", registerUserEmail));
-//
-//    }
+
 
     private void validateUserAlreadyExists(String registerUserEmail) {
         User savedUser = userRepository.findUserByUserName(registerUserEmail);
@@ -120,7 +119,26 @@ public class UserServicesImpl implements UserService{
 
     }
 
+    @Override
+    public AddAArticleResponse createArticle(AddArticleRequest addAArticleRequest) {
+        Blog userBlog = getUserBlogDetails(addAArticleRequest.getUserId());
 
+        Article newArticle = new Article();
+        Mapper.map(newArticle, addAArticleRequest);
+        Article savedArticle = articleService.saveArticle(newArticle);
+        userBlog.getArticles().add(savedArticle);
+        blogService.saveBlog(userBlog);
+        AddAArticleResponse addAArticleResponse = new AddAArticleResponse();
+        addAArticleResponse.setMessage("Article saved successfully");
+        return addAArticleResponse;
+
+    }
+
+    private Blog getUserBlogDetails(String userId) {
+        User user = userRepository.findUserById(userId);
+
+        return blogService.getUserBlog(user.getBlog().getId());
+    }
 
 
 }

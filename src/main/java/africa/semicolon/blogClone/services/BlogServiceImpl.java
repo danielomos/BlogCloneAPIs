@@ -22,10 +22,11 @@ public class BlogServiceImpl implements BlogService {
        return blog;
     }
 
-
-
-
-
+    @Override
+    public Blog getUserBlog(String id) {
+        Blog userBlog = blogRepository.getBlogById(id);
+        return userBlog;
+    }
 
 
 }
