@@ -122,7 +122,9 @@ public class UserServicesImpl implements UserService{
     @Override
     public AddAArticleResponse createArticle(AddArticleRequest addAArticleRequest) {
         Blog userBlog = getUserBlogDetails(addAArticleRequest.getUserId());
-
+        if (userBlog == null) {
+            throw new BlogCloneErrorException("User %s does not have a blog");
+        }
         Article newArticle = new Article();
         Mapper.map(newArticle, addAArticleRequest);
         Article savedArticle = articleService.saveArticle(newArticle);
@@ -135,9 +137,14 @@ public class UserServicesImpl implements UserService{
     }
 
     private Blog getUserBlogDetails(String userId) {
+
         User user = userRepository.findUserById(userId);
 
-        return blogService.getUserBlog(user.getBlog().getId());
+    return blogService.getUserBlog(user.getBlog().getId());
+
+
+
+
     }
 
 

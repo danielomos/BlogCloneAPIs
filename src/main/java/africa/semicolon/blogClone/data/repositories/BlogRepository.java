@@ -8,6 +8,6 @@ import java.util.List;
 public interface BlogRepository extends MongoRepository<Blog, String> {
     Blog getBlogById(String id);
 
-    List<Blog> getAllBlog();
+
 
 }

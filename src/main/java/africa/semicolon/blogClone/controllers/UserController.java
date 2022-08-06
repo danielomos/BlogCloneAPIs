@@ -1,14 +1,17 @@
 package africa.semicolon.blogClone.controllers;
 
+import africa.semicolon.blogClone.dtos.requests.AddArticleRequest;
 import africa.semicolon.blogClone.dtos.requests.AddBlogRequest;
 import africa.semicolon.blogClone.dtos.requests.RegisterUserRequest;
 import africa.semicolon.blogClone.dtos.requests.UserLoginRequest;
+import africa.semicolon.blogClone.dtos.responses.AddAArticleResponse;
 import africa.semicolon.blogClone.dtos.responses.AddBlogResponse;
 import africa.semicolon.blogClone.dtos.responses.LoginUserResponse;
 import africa.semicolon.blogClone.dtos.responses.RegisterUserResponse;
 import africa.semicolon.blogClone.exceptions.BlogCloneErrorException;
 import africa.semicolon.blogClone.exceptions.BlogNotCreatedException;
 import africa.semicolon.blogClone.exceptions.WrongLoginDetails;
+import africa.semicolon.blogClone.services.ArticleService;
 import africa.semicolon.blogClone.services.BlogService;
 import africa.semicolon.blogClone.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,9 @@ public class UserController {
 
     @Autowired
     private BlogService blogService;
+
+    @Autowired
+    private ArticleService articleService;
 
     @PostMapping("/user")
     public ResponseEntity<?> registerUser(@RequestBody RegisterUserRequest request) {
@@ -55,5 +61,13 @@ public class UserController {
             return  new ResponseEntity<>(err.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
+    @PatchMapping("/blog/article")
+    public ResponseEntity<?> createArticle(@RequestBody AddArticleRequest addArticleRequest) {
+        try {
+            AddAArticleResponse addArticleResponse = userService.createArticle(addArticleRequest);
+            return new ResponseEntity<>(addArticleResponse.getMessage(), HttpStatus.CREATED);
+        } catch (BlogCloneErrorException err) {
+            return new ResponseEntity<>(err.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
