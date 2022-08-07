@@ -2,7 +2,10 @@ package africa.semicolon.blogClone.services;
 
 import africa.semicolon.blogClone.data.repositories.UserRepository;
 import africa.semicolon.blogClone.dtos.requests.RegisterUserRequest;
+import africa.semicolon.blogClone.dtos.requests.UserLoginRequest;
+import africa.semicolon.blogClone.dtos.responses.LoginUserResponse;
 import africa.semicolon.blogClone.dtos.responses.RegisterUserResponse;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +22,10 @@ class UserServicesImplTest {
     @Autowired
     private UserRepository userRepository;
 
+    @BeforeEach
+    void tearDown() {
 
+    }
 
     @Test
     public void registerUser_repositorySizeIsOneTest(){
@@ -30,6 +36,24 @@ class UserServicesImplTest {
         response= userService.registerUser(request);
         assertEquals(1L, userRepository.count());
 
+
+    }
+    @Test
+    public void registerUserCanLogin(){
+        RegisterUserResponse response = new RegisterUserResponse();
+        RegisterUserRequest userRegisterrequest = new RegisterUserRequest();
+        userRegisterrequest.setEmail("username");
+        userRegisterrequest.setPassword("password");
+        response= userService.registerUser(userRegisterrequest);
+
+        assertEquals(1L, userRepository.count());
+
+        UserLoginRequest userLoginRequest = new UserLoginRequest();
+        userLoginRequest.setEmail("username");
+        userLoginRequest.setPassword("password");
+        LoginUserResponse loginResponse = new LoginUserResponse();
+        loginResponse =userService.userLogin(userLoginRequest);
+        assertTrue(loginResponse.getIsSuccessful());
 
     }
 

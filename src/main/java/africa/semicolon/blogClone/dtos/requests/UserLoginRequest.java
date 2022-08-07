@@ -5,8 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 
-public class RegisterUserRequest {
+public class UserLoginRequest {
     private String email;
     private String password;
-
 }
