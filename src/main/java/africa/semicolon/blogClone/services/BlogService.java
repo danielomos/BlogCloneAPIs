@@ -9,4 +9,5 @@ public interface BlogService {
 
 
     Blog getUserBlog(String id);
+
 }

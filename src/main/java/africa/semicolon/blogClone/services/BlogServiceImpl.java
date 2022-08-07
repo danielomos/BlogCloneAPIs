@@ -24,7 +24,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog getUserBlog(String id) {
-        Blog userBlog = blogRepository.getBlogById(id);
+        Blog userBlog = blogRepository.findBlogById(id);
         return userBlog;
     }
 

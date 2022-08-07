@@ -18,11 +18,11 @@ public class Mapper {
     }
 
 
-    public static void map(Article newArticle, AddArticleRequest addAArticleRequest) {
+    public static void map(Article newArticle, AddArticleRequest addArticleRequest) {
 
-        newArticle.setTitle(addAArticleRequest.getTitle());
-       newArticle.setAuthor(addAArticleRequest.getAuthor());
-        newArticle.setDescription(addAArticleRequest.getDescription());
-        newArticle.setBody(addAArticleRequest.getBody());
+        newArticle.setTitle(addArticleRequest.getTitle());
+       newArticle.setAuthor(addArticleRequest.getAuthor());
+        newArticle.setDescription(addArticleRequest.getDescription());
+        newArticle.setBody(addArticleRequest.getBody());
     }
 }

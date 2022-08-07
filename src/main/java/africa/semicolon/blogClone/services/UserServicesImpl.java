@@ -13,6 +13,7 @@ import africa.semicolon.blogClone.dtos.responses.AddBlogResponse;
 import africa.semicolon.blogClone.dtos.responses.LoginUserResponse;
 import africa.semicolon.blogClone.dtos.responses.RegisterUserResponse;
 import africa.semicolon.blogClone.exceptions.BlogCloneErrorException;
+import africa.semicolon.blogClone.exceptions.BlogNotFoundException;
 import africa.semicolon.blogClone.exceptions.UserAlreadyExit;
 import africa.semicolon.blogClone.exceptions.WrongLoginDetails;
 import africa.semicolon.blogClone.utils.Mapper;
@@ -98,7 +99,7 @@ public class UserServicesImpl implements UserService{
     @Override
     public AddBlogResponse createBlog(AddBlogRequest addBlogRequest) {
         User user = userRepository.findUserById(addBlogRequest.getUserId());
-        if(user.getBlog().getId() != null){
+        if(user.getBlog() != null){
             throw new BlogCloneErrorException(String.format("%s Already has a blog created ", user.getUserName()));
         }
         else{
@@ -120,13 +121,11 @@ public class UserServicesImpl implements UserService{
     }
 
     @Override
-    public AddAArticleResponse createArticle(AddArticleRequest addAArticleRequest) {
-        Blog userBlog = getUserBlogDetails(addAArticleRequest.getUserId());
-        if (userBlog == null) {
-            throw new BlogCloneErrorException("User %s does not have a blog");
-        }
+    public AddAArticleResponse createArticle(AddArticleRequest addArticleRequest) {
+        Blog userBlog = getUserBlogDetails(addArticleRequest.getUserId());
+
         Article newArticle = new Article();
-        Mapper.map(newArticle, addAArticleRequest);
+        Mapper.map(newArticle, addArticleRequest);
         Article savedArticle = articleService.saveArticle(newArticle);
         userBlog.getArticles().add(savedArticle);
         blogService.saveBlog(userBlog);
@@ -137,14 +136,14 @@ public class UserServicesImpl implements UserService{
     }
 
     private Blog getUserBlogDetails(String userId) {
-
         User user = userRepository.findUserById(userId);
+        Blog blog = user.getBlog();
+        Blog userBlog = blogService.getUserBlog(blog.getId());
+        if (userBlog != null) {
+            return userBlog;
 
-    return blogService.getUserBlog(user.getBlog().getId());
-
-
-
-
+        }
+        throw new BlogNotFoundException("User does not have a blog");
     }
 
 
