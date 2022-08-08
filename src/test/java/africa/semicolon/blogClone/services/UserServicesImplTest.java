@@ -114,8 +114,8 @@ class UserServicesImplTest {
 
 
 
-        List<UserArticleListResponse> articles = userService.getUserAllArticlesList(loginUserResponse.getEmail());
-        System.out.println(articles);
+//        List<UserArticleListResponse> articles = userService.getUserAllArticlesList(loginUserResponse.getEmail());
+//        System.out.println(articles);
 
 
     }

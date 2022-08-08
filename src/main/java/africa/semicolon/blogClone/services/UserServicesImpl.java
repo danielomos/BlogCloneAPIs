@@ -144,12 +144,12 @@ public class UserServicesImpl implements UserService{
     }
 
     @Override
-    public List<UserArticleListResponse> getUserAllArticlesList(String email) {
+    public AppUserArticleResponse getUserAllArticlesList(String email) {
         String userId = convertUserEmailToID(email);
         User user = userRepository.findUserById(userId);
         Blog blog = blogService.getUserBlog(user.getBlog().getId());
         if (articleService.getArticleCount(user) == 0) {
-            throw new BlogCloneErrorException("Article count is zero");
+            throw new BlogCloneErrorException(String.format("%s currently has no articles", user.getUserName()));
         }
         List<Article> userBlogArticles = blog.getArticles();
         List<UserArticleListResponse> response = new ArrayList<UserArticleListResponse>();
@@ -159,8 +159,11 @@ public class UserServicesImpl implements UserService{
             response.add(eachResponse);
 
         }
+        AppUserArticleResponse appUserArticleResponse = new AppUserArticleResponse();
+        appUserArticleResponse.setArticles(response);
 
-        return response;
+
+        return appUserArticleResponse;
     }
 
     private Blog getUserBlogDetails(String userId) {

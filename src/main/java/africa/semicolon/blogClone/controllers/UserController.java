@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -69,8 +70,18 @@ public class UserController {
             return new ResponseEntity<>(err.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+//    @GetMapping("user/blog/article/{email}")
+//    public List<UserArticleListResponse> viewAllArticle(@PathVariable String email) {
+//     return userService.getUserAllArticlesList(email);
+//    }
+
     @GetMapping("user/blog/article/{email}")
-    public List<UserArticleListResponse> viewAllArticle(@PathVariable String email) {
-     return userService.getUserAllArticlesList(email);
+    public ResponseEntity<?> viewAllArticle(@PathVariable String email) {
+        try {
+          AppUserArticleResponse response = userService.getUserAllArticlesList(email);
+            return new ResponseEntity<>(response.getArticles(),HttpStatus.FOUND);
+        } catch (BlogCloneErrorException err) {
+            return new ResponseEntity<>(err.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

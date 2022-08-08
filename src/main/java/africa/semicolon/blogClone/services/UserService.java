@@ -24,6 +24,6 @@ public interface UserService {
 
     AddAArticleResponse createArticle(AddArticleRequest addAArticleRequest);
 
-    List<UserArticleListResponse> getUserAllArticlesList(String userId );
+    AppUserArticleResponse getUserAllArticlesList(String userId );
     
 }

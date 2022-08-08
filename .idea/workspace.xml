@@ -5,19 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19a46cfb-add5-4ebc-adfe-a5cead2e9108" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/dtos/responses/UserArticleListResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/dtos/responses/AppUserArticleResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/data/models/Comments.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/data/models/Comments.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/dtos/requests/AddArticleRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/dtos/requests/AddArticleRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/dtos/requests/AddBlogRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/dtos/requests/AddBlogRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/dtos/responses/LoginUserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/dtos/responses/LoginUserResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/ArticleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/ArticleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/ArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/ArticleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/BlogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/BlogService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/UserServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/UserServicesImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/utils/Mapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/utils/Mapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/africa/semicolon/blogClone/services/UserServicesImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/africa/semicolon/blogClone/services/UserServicesImplTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -159,8 +151,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.Main" />
-        <item itemvalue="JUnit.UserServicesImplTest.listAllUserBlogArticles" />
         <item itemvalue="JUnit.UserServicesImplTest" />
+        <item itemvalue="JUnit.UserServicesImplTest.listAllUserBlogArticles" />
         <item itemvalue="JUnit.UserServicesImplTest.registerUser_repositorySizeIsOneTest" />
         <item itemvalue="JUnit.UserServicesImplTest.registerUserCanLogin" />
       </list>
@@ -188,7 +180,7 @@
       <workItem from="1659816683685" duration="2643000" />
       <workItem from="1659859527634" duration="5338000" />
       <workItem from="1659900576665" duration="4379000" />
-      <workItem from="1659945074912" duration="17266000" />
+      <workItem from="1659945074912" duration="19678000" />
     </task>
     <servers />
   </component>
