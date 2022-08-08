@@ -8,10 +8,7 @@ import africa.semicolon.blogClone.dtos.requests.AddArticleRequest;
 import africa.semicolon.blogClone.dtos.requests.AddBlogRequest;
 import africa.semicolon.blogClone.dtos.requests.RegisterUserRequest;
 import africa.semicolon.blogClone.dtos.requests.UserLoginRequest;
-import africa.semicolon.blogClone.dtos.responses.AddAArticleResponse;
-import africa.semicolon.blogClone.dtos.responses.AddBlogResponse;
-import africa.semicolon.blogClone.dtos.responses.LoginUserResponse;
-import africa.semicolon.blogClone.dtos.responses.RegisterUserResponse;
+import africa.semicolon.blogClone.dtos.responses.*;
 import africa.semicolon.blogClone.exceptions.BlogCloneErrorException;
 import africa.semicolon.blogClone.exceptions.BlogNotFoundException;
 import africa.semicolon.blogClone.exceptions.UserAlreadyExit;
@@ -67,6 +64,7 @@ public class UserServicesImpl implements UserService{
 
             LoginUserResponse loginMessage = new LoginUserResponse();
             loginMessage.setIsSuccessful(true);
+            loginMessage.setEmail(foundUser.getUserName());
             loginMessage.setMessage(String.format("%s successfully login", foundUser.getUserName()));
             return loginMessage ;
         }
@@ -98,7 +96,8 @@ public class UserServicesImpl implements UserService{
     }
     @Override
     public AddBlogResponse createBlog(AddBlogRequest addBlogRequest) {
-        User user = userRepository.findUserById(addBlogRequest.getUserId());
+        String userId = convertUserEmailToID(addBlogRequest.getEmail());
+        User user = userRepository.findUserById(userId);
         if(user.getBlog() != null){
             throw new BlogCloneErrorException(String.format("%s Already has a blog created ", user.getUserName()));
         }
@@ -120,9 +119,18 @@ public class UserServicesImpl implements UserService{
 
     }
 
+    private String convertUserEmailToID(String email) {
+        User user = new User();
+        user.setUserName(email);
+       User userId = userRepository.findUserByUserName(user.getUserName());
+        return userId.getId();
+
+    }
+
     @Override
     public AddAArticleResponse createArticle(AddArticleRequest addArticleRequest) {
-        Blog userBlog = getUserBlogDetails(addArticleRequest.getUserId());
+        String userId = convertUserEmailToID(addArticleRequest.getEmail());
+        Blog userBlog = getUserBlogDetails(userId);
 
         Article newArticle = new Article();
         Mapper.map(newArticle, addArticleRequest);
@@ -133,6 +141,26 @@ public class UserServicesImpl implements UserService{
         addAArticleResponse.setMessage("Article saved successfully");
         return addAArticleResponse;
 
+    }
+
+    @Override
+    public List<UserArticleListResponse> getUserAllArticlesList(String email) {
+        String userId = convertUserEmailToID(email);
+        User user = userRepository.findUserById(userId);
+        Blog blog = blogService.getUserBlog(user.getBlog().getId());
+        if (articleService.getArticleCount(user) == 0) {
+            throw new BlogCloneErrorException("Article count is zero");
+        }
+        List<Article> userBlogArticles = blog.getArticles();
+        List<UserArticleListResponse> response = new ArrayList<UserArticleListResponse>();
+        for(Article article : userBlogArticles) {
+            UserArticleListResponse eachResponse = new UserArticleListResponse();
+            Mapper.map(article, eachResponse);
+            response.add(eachResponse);
+
+        }
+
+        return response;
     }
 
     private Blog getUserBlogDetails(String userId) {

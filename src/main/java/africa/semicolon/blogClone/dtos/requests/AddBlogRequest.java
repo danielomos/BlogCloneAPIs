@@ -16,7 +16,7 @@ public class AddBlogRequest {
     private String blogName;
     private String description;
     private List<String> tags;
-    private String userId;
+    private String email;
 
 
 }

@@ -8,5 +8,5 @@ public class AddArticleRequest {
     private String description;
     private String author;
     private String body;
-    private String userId;
+    private String email;
 }

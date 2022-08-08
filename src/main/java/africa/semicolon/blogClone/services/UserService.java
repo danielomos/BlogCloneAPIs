@@ -1,14 +1,14 @@
 package africa.semicolon.blogClone.services;
 
+import africa.semicolon.blogClone.data.models.Article;
 import africa.semicolon.blogClone.data.models.User;
 import africa.semicolon.blogClone.dtos.requests.AddArticleRequest;
 import africa.semicolon.blogClone.dtos.requests.AddBlogRequest;
 import africa.semicolon.blogClone.dtos.requests.RegisterUserRequest;
 import africa.semicolon.blogClone.dtos.requests.UserLoginRequest;
-import africa.semicolon.blogClone.dtos.responses.AddAArticleResponse;
-import africa.semicolon.blogClone.dtos.responses.AddBlogResponse;
-import africa.semicolon.blogClone.dtos.responses.LoginUserResponse;
-import africa.semicolon.blogClone.dtos.responses.RegisterUserResponse;
+import africa.semicolon.blogClone.dtos.responses.*;
+
+import java.util.List;
 
 public interface UserService {
     RegisterUserResponse registerUser(RegisterUserRequest request);
@@ -23,4 +23,7 @@ public interface UserService {
     AddBlogResponse createBlog(AddBlogRequest addBlogRequest);
 
     AddAArticleResponse createArticle(AddArticleRequest addAArticleRequest);
+
+    List<UserArticleListResponse> getUserAllArticlesList(String userId );
+    
 }

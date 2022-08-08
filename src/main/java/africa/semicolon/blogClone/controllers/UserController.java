@@ -4,10 +4,7 @@ import africa.semicolon.blogClone.dtos.requests.AddArticleRequest;
 import africa.semicolon.blogClone.dtos.requests.AddBlogRequest;
 import africa.semicolon.blogClone.dtos.requests.RegisterUserRequest;
 import africa.semicolon.blogClone.dtos.requests.UserLoginRequest;
-import africa.semicolon.blogClone.dtos.responses.AddAArticleResponse;
-import africa.semicolon.blogClone.dtos.responses.AddBlogResponse;
-import africa.semicolon.blogClone.dtos.responses.LoginUserResponse;
-import africa.semicolon.blogClone.dtos.responses.RegisterUserResponse;
+import africa.semicolon.blogClone.dtos.responses.*;
 import africa.semicolon.blogClone.exceptions.BlogCloneErrorException;
 import africa.semicolon.blogClone.exceptions.BlogNotCreatedException;
 import africa.semicolon.blogClone.exceptions.WrongLoginDetails;
@@ -18,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -51,7 +50,7 @@ public class UserController {
             return new ResponseEntity<>(err.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
-    @PatchMapping("/blog/create")
+    @PatchMapping("user/blog/create")
     public ResponseEntity<?> CreateBlog(@RequestBody AddBlogRequest addBlogRequest){
         try{
             AddBlogResponse addBlogResponse = userService.createBlog(addBlogRequest);
@@ -61,7 +60,7 @@ public class UserController {
             return  new ResponseEntity<>(err.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @PatchMapping("/blog/article")
+    @PatchMapping("user/blog/article/create")
     public ResponseEntity<?> createArticle(@RequestBody AddArticleRequest addArticleRequest) {
         try {
             AddAArticleResponse addArticleResponse = userService.createArticle(addArticleRequest);
@@ -69,5 +68,9 @@ public class UserController {
         } catch (BlogCloneErrorException err) {
             return new ResponseEntity<>(err.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+    @GetMapping("user/blog/article/{email}")
+    public List<UserArticleListResponse> viewAllArticle(@PathVariable String email) {
+     return userService.getUserAllArticlesList(email);
     }
 }
