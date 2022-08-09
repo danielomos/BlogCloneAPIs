@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServicesImpl implements UserService{
@@ -142,17 +143,23 @@ public class UserServicesImpl implements UserService{
         return addAArticleResponse;
 
     }
+    public User getUserId(String userId) {
+        User user = userRepository.findUserById(userId);
+        return user;
+    }
 
     @Override
     public AppUserArticleResponse getUserAllArticlesList(String email) {
         String userId = convertUserEmailToID(email);
-        User user = userRepository.findUserById(userId);
-        Blog blog = blogService.getUserBlog(user.getBlog().getId());
+        User user = getUserId(userId);
         if (articleService.getArticleCount(user) == 0) {
             throw new BlogCloneErrorException(String.format("%s currently has no articles", user.getUserName()));
         }
-        List<Article> userBlogArticles = blog.getArticles();
+        Blog blog = getUserBlogDetails(userId);
+
+        List<Article> userBlogArticles = blogService.getArticlesInaBlog(blog);
         List<UserArticleListResponse> response = new ArrayList<UserArticleListResponse>();
+
         for(Article article : userBlogArticles) {
             UserArticleListResponse eachResponse = new UserArticleListResponse();
             Mapper.map(article, eachResponse);
@@ -166,10 +173,27 @@ public class UserServicesImpl implements UserService{
         return appUserArticleResponse;
     }
 
+    @Override
+    public void clearDatabases() {
+        userRepository.deleteAll();
+    }
+
+    @Override
+    public SingleUserArticleResponse getArticle(String title) {
+           for(User user : userRepository.findAll()) {
+               user.getBlog().getArticles();
+           }
+          Article article = articleService.getArticle(title);
+          SingleUserArticleResponse articleResponse = new SingleUserArticleResponse();
+          Mapper.map(article, articleResponse);
+        return articleResponse;
+
+    }
+
     private Blog getUserBlogDetails(String userId) {
         User user = userRepository.findUserById(userId);
-        Blog blog = user.getBlog();
-        Blog userBlog = blogService.getUserBlog(blog.getId());
+        Blog userBlog = user.getBlog();
+//        Blog userBlog = blogService.getUserBlog(blog);
         if (userBlog != null) {
             return userBlog;
 
@@ -177,5 +201,13 @@ public class UserServicesImpl implements UserService{
         throw new BlogNotFoundException("User does not have a blog");
     }
 
+    @Override
+    public String toString() {
+        return "UserServicesImpl{" +
+                "articleService=" + articleService +
+                ", userRepository=" + userRepository +
+                ", blogService=" + blogService +
+                '}';
+    }
 
 }

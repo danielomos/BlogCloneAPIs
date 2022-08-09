@@ -53,6 +53,7 @@ class UserServicesImplTest {
     }
     @AfterEach
     void tearDown() {
+        userService.clearDatabases();
 
 
     }
@@ -62,8 +63,8 @@ class UserServicesImplTest {
        request.setEmail("username");
        request.setPassword("password");
        response= userService.registerUser(request);
-       assertNotNull(userRepository.count());
-
+//       assertNotNull(userRepository.count());
+       assertEquals(1, userRepository.count());
 
     }
     @Test
@@ -71,6 +72,7 @@ class UserServicesImplTest {
         request.setEmail("username1");
         request.setPassword("password");
         response= userService.registerUser(request);
+        assertEquals(1, userRepository.count());
 
 
         userLoginRequest.setEmail("username1");
@@ -84,7 +86,7 @@ class UserServicesImplTest {
         request.setEmail("username2");
         request.setPassword("password2");
         response= userService.registerUser(request);
-
+        assertEquals(1, userRepository.count());
 
         userLoginRequest.setEmail("username2");
         userLoginRequest.setPassword("password2");
@@ -114,10 +116,47 @@ class UserServicesImplTest {
 
 
 
-//        List<UserArticleListResponse> articles = userService.getUserAllArticlesList(loginUserResponse.getEmail());
-//        System.out.println(articles);
+       AppUserArticleResponse articles = userService.getUserAllArticlesList(loginUserResponse.getEmail());
+        System.out.println(articles);
 
 
     }
+    
+    @Test
+    void thatUserCanViewAArticle(){
+        request.setEmail("username2");
+        request.setPassword("password2");
+        response= userService.registerUser(request);
+        assertEquals(1, userRepository.count());
+
+        userLoginRequest.setEmail("username2");
+        userLoginRequest.setPassword("password2");
+        loginUserResponse =userService.userLogin(userLoginRequest);
+        assertTrue(loginUserResponse.getIsSuccessful());
+
+        addBlogRequest.setBlogName("blogName");
+        addBlogRequest.setDescription("description");
+        List<String>  tagsList = new ArrayList<String>();
+        tagsList.add("tags1");
+        tagsList.add("tags2");
+        tagsList.add("tags3");
+        addBlogRequest.setTags(tagsList);
+        addBlogRequest.setEmail(loginUserResponse.getEmail());
+
+        userService.createBlog(addBlogRequest);
+
+
+
+        addArticleRequest.setTitle("articleTitle");
+        addArticleRequest.setAuthor("articleAuthor");
+        addArticleRequest.setDescription("articleDescription");
+        addArticleRequest.setBody("articleBody");
+        addArticleRequest.setEmail(loginUserResponse.getEmail());
+
+        userService.createArticle(addArticleRequest);
+        
+       SingleUserArticleResponse response = userService.getArticle("articleTitle");
+    }
+        
 
 }

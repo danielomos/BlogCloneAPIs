@@ -25,5 +25,8 @@ public interface UserService {
     AddAArticleResponse createArticle(AddArticleRequest addAArticleRequest);
 
     AppUserArticleResponse getUserAllArticlesList(String userId );
+    public void clearDatabases();
+
+    public SingleUserArticleResponse getArticle(String articleId);
     
 }
