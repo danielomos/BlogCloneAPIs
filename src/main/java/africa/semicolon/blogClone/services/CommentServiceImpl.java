@@ -25,7 +25,8 @@ public class CommentServiceImpl implements CommentService {
         Mapper.map(addCommitRequest, comment);
 
         commentRepository.save(comment);
-        List<Comments> articleCommentList = new ArrayList<Comments>();
+        List<Comments> articleCommentList = article.getCommentsList();
+
         articleCommentList.add(comment);
         article.setCommentsList(articleCommentList);
          articleService.saveArticle(article);
