@@ -5,12 +5,10 @@ import africa.semicolon.blogClone.data.models.Blog;
 import africa.semicolon.blogClone.data.models.Comments;
 import africa.semicolon.blogClone.dtos.requests.AddArticleRequest;
 import africa.semicolon.blogClone.dtos.requests.AddBlogRequest;
+import africa.semicolon.blogClone.dtos.requests.AddCommentRequest;
+import africa.semicolon.blogClone.dtos.responses.AddCommentResponse;
 import africa.semicolon.blogClone.dtos.responses.SingleUserArticleResponse;
 import africa.semicolon.blogClone.dtos.responses.UserArticleListResponse;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 public class Mapper {
     public static  void map(AddBlogRequest addBlogRequest, Blog inBlog){
@@ -52,5 +50,20 @@ public class Mapper {
         articleResponse.setDescription(article.getDescription());
         articleResponse.setCommentsList(article.getCommentsList());
         articleResponse.setId(article.getId());
+    }
+
+
+    public static void map(AddCommentRequest addCommitRequest, Comments comment) {
+        comment.setCommitMessage(addCommitRequest.getCommitMessage());
+        comment.setEmail(addCommitRequest.getEmail());
+        comment.setName(addCommitRequest.getName());
+    }
+
+
+
+    public static void map(AddCommentResponse addCommentResponse, Comments comment) {
+        addCommentResponse.setCommitMessage(comment.getCommitMessage());
+        addCommentResponse.setName(comment.getName());
+        addCommentResponse.setId(comment.getId());
     }
 }

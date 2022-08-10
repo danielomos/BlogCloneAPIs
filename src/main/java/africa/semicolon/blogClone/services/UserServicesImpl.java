@@ -2,12 +2,10 @@ package africa.semicolon.blogClone.services;
 
 import africa.semicolon.blogClone.data.models.Article;
 import africa.semicolon.blogClone.data.models.Blog;
+import africa.semicolon.blogClone.data.models.Comments;
 import africa.semicolon.blogClone.data.models.User;
 import africa.semicolon.blogClone.data.repositories.UserRepository;
-import africa.semicolon.blogClone.dtos.requests.AddArticleRequest;
-import africa.semicolon.blogClone.dtos.requests.AddBlogRequest;
-import africa.semicolon.blogClone.dtos.requests.RegisterUserRequest;
-import africa.semicolon.blogClone.dtos.requests.UserLoginRequest;
+import africa.semicolon.blogClone.dtos.requests.*;
 import africa.semicolon.blogClone.dtos.responses.*;
 import africa.semicolon.blogClone.exceptions.BlogCloneErrorException;
 import africa.semicolon.blogClone.exceptions.BlogNotFoundException;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServicesImpl implements UserService{
@@ -30,6 +27,9 @@ public class UserServicesImpl implements UserService{
 
     @Autowired
     private BlogService blogService;
+
+    @Autowired
+    CommentService commentService;
 
     @Override
     public RegisterUserResponse registerUser(RegisterUserRequest request) {
@@ -189,11 +189,20 @@ public class UserServicesImpl implements UserService{
     }
 
     @Override
-    public void deleteArticleInaBlog(String title) {
+    public DeleteArticleResponse deleteArticleInaBlog(String title) {
         articleService.deleteArticleInaBlog(title);
         DeleteArticleResponse deleteArticleResponse = new DeleteArticleResponse();
         deleteArticleResponse.setMassage(String.format("%s successfully deleted", title));
+        return  deleteArticleResponse;
+    }
 
+    @Override
+    public AddCommentResponse AddCommitToArticle(AddCommentRequest addCommitRequest) {
+        Comments comment = commentService.addCommit(addCommitRequest);
+        AddCommentResponse addCommentResponse = new AddCommentResponse();
+
+        Mapper.map(addCommentResponse, comment);
+        return addCommentResponse;
     }
 
     private Blog getUserBlogDetails(String userId) {
@@ -206,6 +215,8 @@ public class UserServicesImpl implements UserService{
         }
         throw new BlogNotFoundException("User does not have a blog");
     }
+
+
 
     @Override
     public String toString() {
