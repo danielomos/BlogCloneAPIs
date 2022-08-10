@@ -84,4 +84,14 @@ public class UserController {
             return new ResponseEntity<>(err.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("user/blog/article/viewarticle/{title}")
+    public ResponseEntity<?>     getArticle(@PathVariable String title){
+        try{
+            SingleUserArticleResponse response = userService.getArticleInaBlog(title);
+            return new ResponseEntity<>(response,HttpStatus.FOUND);
+        }catch (BlogCloneErrorException err) {
+            return new ResponseEntity<>(err.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
 }

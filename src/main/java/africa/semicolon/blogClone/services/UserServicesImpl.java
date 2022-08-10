@@ -179,14 +179,20 @@ public class UserServicesImpl implements UserService{
     }
 
     @Override
-    public SingleUserArticleResponse getArticle(String title) {
-           for(User user : userRepository.findAll()) {
-               user.getBlog().getArticles();
-           }
-          Article article = articleService.getArticle(title);
+    public SingleUserArticleResponse getArticleInaBlog(String title) {
+
+          Article article = articleService.getArticleInDb(title);
           SingleUserArticleResponse articleResponse = new SingleUserArticleResponse();
           Mapper.map(article, articleResponse);
         return articleResponse;
+
+    }
+
+    @Override
+    public void deleteArticleInaBlog(String title) {
+        articleService.deleteArticleInaBlog(title);
+        DeleteArticleResponse deleteArticleResponse = new DeleteArticleResponse();
+        deleteArticleResponse.setMassage(String.format("%s successfully deleted", title));
 
     }
 

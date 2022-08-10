@@ -7,6 +7,7 @@ import africa.semicolon.blogClone.exceptions.BlogCloneErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,19 +45,27 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     @Override
-    public Article getArticle(String title) {
+    public Article getArticleInDb(String title) {
 
         if (articleRepository.findAll().
                 stream().noneMatch(((article -> article.getTitle().equalsIgnoreCase(title))))) {
             throw new BlogCloneErrorException("article not found");
 
         }
+        Article article = new Article();
         List<Article> articles = getArticleList();
         for (Article eachArticle : articles) {
             if (eachArticle.getTitle().equalsIgnoreCase(title))
-                Article foundArticle = eachArticle;
+             article = eachArticle;
         }
 
+    return article;
+    }
+
+    @Override
+    public void deleteArticleInaBlog(String title) {
+        Article articleToDelete = getArticleInDb(title);
+        articleRepository.delete(articleToDelete);
 
     }
 //    private  Article findArticleByTitle(String title) {

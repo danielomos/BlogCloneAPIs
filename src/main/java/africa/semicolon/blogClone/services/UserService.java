@@ -27,6 +27,6 @@ public interface UserService {
     AppUserArticleResponse getUserAllArticlesList(String userId );
     public void clearDatabases();
 
-    public SingleUserArticleResponse getArticle(String articleId);
-    
+    public SingleUserArticleResponse getArticleInaBlog(String articleId);
+     public void deleteArticleInaBlog(String title);
 }
