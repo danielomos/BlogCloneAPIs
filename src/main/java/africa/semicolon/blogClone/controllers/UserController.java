@@ -86,7 +86,7 @@ public class UserController {
         }
     }
     @GetMapping("user/blog/article/viewarticle/{title}")
-    public ResponseEntity<?> getArticle(@PathVariable String title){
+    public ResponseEntity<?>     getArticle(@PathVariable String title){
         try{
             SingleUserArticleResponse response = userService.getArticleInaBlog(title);
             return new ResponseEntity<>(response,HttpStatus.FOUND);
