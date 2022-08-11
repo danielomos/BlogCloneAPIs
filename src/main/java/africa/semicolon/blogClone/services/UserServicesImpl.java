@@ -2,16 +2,11 @@ package africa.semicolon.blogClone.services;
 
 import africa.semicolon.blogClone.data.models.Article;
 import africa.semicolon.blogClone.data.models.Blog;
+import africa.semicolon.blogClone.data.models.Comments;
 import africa.semicolon.blogClone.data.models.User;
 import africa.semicolon.blogClone.data.repositories.UserRepository;
-import africa.semicolon.blogClone.dtos.requests.AddArticleRequest;
-import africa.semicolon.blogClone.dtos.requests.AddBlogRequest;
-import africa.semicolon.blogClone.dtos.requests.RegisterUserRequest;
-import africa.semicolon.blogClone.dtos.requests.UserLoginRequest;
-import africa.semicolon.blogClone.dtos.responses.AddAArticleResponse;
-import africa.semicolon.blogClone.dtos.responses.AddBlogResponse;
-import africa.semicolon.blogClone.dtos.responses.LoginUserResponse;
-import africa.semicolon.blogClone.dtos.responses.RegisterUserResponse;
+import africa.semicolon.blogClone.dtos.requests.*;
+import africa.semicolon.blogClone.dtos.responses.*;
 import africa.semicolon.blogClone.exceptions.BlogCloneErrorException;
 import africa.semicolon.blogClone.exceptions.BlogNotFoundException;
 import africa.semicolon.blogClone.exceptions.UserAlreadyExit;
@@ -32,6 +27,9 @@ public class UserServicesImpl implements UserService{
 
     @Autowired
     private BlogService blogService;
+
+    @Autowired
+    CommentService commentService;
 
     @Override
     public RegisterUserResponse registerUser(RegisterUserRequest request) {
@@ -67,6 +65,7 @@ public class UserServicesImpl implements UserService{
 
             LoginUserResponse loginMessage = new LoginUserResponse();
             loginMessage.setIsSuccessful(true);
+            loginMessage.setEmail(foundUser.getUserName());
             loginMessage.setMessage(String.format("%s successfully login", foundUser.getUserName()));
             return loginMessage ;
         }
@@ -98,7 +97,8 @@ public class UserServicesImpl implements UserService{
     }
     @Override
     public AddBlogResponse createBlog(AddBlogRequest addBlogRequest) {
-        User user = userRepository.findUserById(addBlogRequest.getUserId());
+        String userId = convertUserEmailToID(addBlogRequest.getEmail());
+        User user = userRepository.findUserById(userId);
         if(user.getBlog() != null){
             throw new BlogCloneErrorException(String.format("%s Already has a blog created ", user.getUserName()));
         }
@@ -120,9 +120,18 @@ public class UserServicesImpl implements UserService{
 
     }
 
+    private String convertUserEmailToID(String email) {
+        User user = new User();
+        user.setUserName(email);
+       User userId = userRepository.findUserByUserName(user.getUserName());
+        return userId.getId();
+
+    }
+
     @Override
     public AddAArticleResponse createArticle(AddArticleRequest addArticleRequest) {
-        Blog userBlog = getUserBlogDetails(addArticleRequest.getUserId());
+        String userId = convertUserEmailToID(addArticleRequest.getEmail());
+        Blog userBlog = getUserBlogDetails(userId);
 
         Article newArticle = new Article();
         Mapper.map(newArticle, addArticleRequest);
@@ -134,11 +143,72 @@ public class UserServicesImpl implements UserService{
         return addAArticleResponse;
 
     }
+    public User getUserId(String userId) {
+        User user = userRepository.findUserById(userId);
+        return user;
+    }
+
+    @Override
+    public AppUserArticleResponse getUserAllArticlesList(String email) {
+        String userId = convertUserEmailToID(email);
+        User user = getUserId(userId);
+        if (articleService.getArticleCount(user) == 0) {
+            throw new BlogCloneErrorException(String.format("%s currently has no articles", user.getUserName()));
+        }
+        Blog blog = getUserBlogDetails(userId);
+
+        List<Article> userBlogArticles = blogService.getArticlesInaBlog(blog);
+        List<UserArticleListResponse> response = new ArrayList<UserArticleListResponse>();
+
+        for(Article article : userBlogArticles) {
+            UserArticleListResponse eachResponse = new UserArticleListResponse();
+            Mapper.map(article, eachResponse);
+            response.add(eachResponse);
+
+        }
+        AppUserArticleResponse appUserArticleResponse = new AppUserArticleResponse();
+        appUserArticleResponse.setArticles(response);
+
+
+        return appUserArticleResponse;
+    }
+
+    @Override
+    public void clearDatabases() {
+        userRepository.deleteAll();
+    }
+
+    @Override
+    public SingleUserArticleResponse getArticleInaBlog(String title) {
+
+          Article article = articleService.getArticleInDb(title);
+          SingleUserArticleResponse articleResponse = new SingleUserArticleResponse();
+          Mapper.map(article, articleResponse);
+        return articleResponse;
+
+    }
+
+    @Override
+    public DeleteArticleResponse deleteArticleInaBlog(String title) {
+        articleService.deleteArticleInaBlog(title);
+        DeleteArticleResponse deleteArticleResponse = new DeleteArticleResponse();
+        deleteArticleResponse.setMassage(String.format("%s successfully deleted", title));
+        return  deleteArticleResponse;
+    }
+
+    @Override
+    public AddCommentResponse AddCommitToArticle(AddCommentRequest addCommitRequest) {
+        Comments comment = commentService.addCommit(addCommitRequest);
+        AddCommentResponse addCommentResponse = new AddCommentResponse();
+
+        Mapper.map(addCommentResponse, comment);
+        return addCommentResponse;
+    }
 
     private Blog getUserBlogDetails(String userId) {
         User user = userRepository.findUserById(userId);
-        Blog blog = user.getBlog();
-        Blog userBlog = blogService.getUserBlog(blog.getId());
+        Blog userBlog = user.getBlog();
+//        Blog userBlog = blogService.getUserBlog(blog);
         if (userBlog != null) {
             return userBlog;
 
@@ -146,5 +216,15 @@ public class UserServicesImpl implements UserService{
         throw new BlogNotFoundException("User does not have a blog");
     }
 
+
+
+    @Override
+    public String toString() {
+        return "UserServicesImpl{" +
+                "articleService=" + articleService +
+                ", userRepository=" + userRepository +
+                ", blogService=" + blogService +
+                '}';
+    }
 
 }

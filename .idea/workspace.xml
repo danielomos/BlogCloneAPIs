@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19a46cfb-add5-4ebc-adfe-a5cead2e9108" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/exceptions/BlogNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/data/repositories/BlogRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/data/repositories/BlogRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/BlogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/BlogService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/BlogServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/BlogServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/UserServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/UserServicesImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/utils/Mapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/utils/Mapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/CommentServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,21 +69,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.Main">
-    <configuration name="UserRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="blogClone" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="africa.semicolon.blogClone.data.repositories.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="africa.semicolon.blogClone.data.repositories" />
-      <option name="MAIN_CLASS_NAME" value="africa.semicolon.blogClone.data.repositories.UserRepositoryTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="UserServicesImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="blogClone" />
       <extension name="coverage">
@@ -103,7 +84,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserServicesImplTest.registerUserCanLogin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserServicesImplTest.listAllUserBlogArticles" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="blogClone" />
       <extension name="coverage">
         <pattern>
@@ -113,7 +94,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="africa.semicolon.blogClone.services" />
       <option name="MAIN_CLASS_NAME" value="africa.semicolon.blogClone.services.UserServicesImplTest" />
-      <option name="METHOD_NAME" value="registerUserCanLogin" />
+      <option name="METHOD_NAME" value="listAllUserBlogArticles" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -135,6 +116,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UserServicesImplTest.thatUserCanViewAArticle" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="blogClone" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="africa.semicolon.blogClone.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="africa.semicolon.blogClone.services" />
+      <option name="MAIN_CLASS_NAME" value="africa.semicolon.blogClone.services.UserServicesImplTest" />
+      <option name="METHOD_NAME" value="thatUserCanViewAArticle" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="blogClone" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="africa.semicolon.blogClone.Main" />
@@ -151,10 +148,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.Main" />
-        <item itemvalue="JUnit.UserServicesImplTest.registerUserCanLogin" />
-        <item itemvalue="JUnit.UserServicesImplTest" />
         <item itemvalue="JUnit.UserServicesImplTest.registerUser_repositorySizeIsOneTest" />
-        <item itemvalue="JUnit.UserRepositoryTest" />
+        <item itemvalue="JUnit.UserServicesImplTest.thatUserCanViewAArticle" />
+        <item itemvalue="JUnit.UserServicesImplTest" />
+        <item itemvalue="JUnit.UserServicesImplTest.listAllUserBlogArticles" />
       </list>
     </recent_temporary>
   </component>
@@ -178,6 +175,14 @@
       <workItem from="1659745664901" duration="1992000" />
       <workItem from="1659771643531" duration="3694000" />
       <workItem from="1659816683685" duration="2643000" />
+      <workItem from="1659859527634" duration="5338000" />
+      <workItem from="1659900576665" duration="4379000" />
+      <workItem from="1659945074912" duration="20081000" />
+      <workItem from="1659989979948" duration="3481000" />
+      <workItem from="1660033770336" duration="13559000" />
+      <workItem from="1660065258723" duration="2993000" />
+      <workItem from="1660102193195" duration="1383000" />
+      <workItem from="1660118025169" duration="13618000" />
     </task>
     <servers />
   </component>
