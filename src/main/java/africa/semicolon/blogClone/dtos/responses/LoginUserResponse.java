@@ -9,4 +9,5 @@ public class LoginUserResponse {
     private Boolean isSuccessful = false;
     private String message;
     private String email;
+    private String userId;
 }

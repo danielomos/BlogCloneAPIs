@@ -1,6 +1,5 @@
 package africa.semicolon.blogClone.services;
 
-import africa.semicolon.blogClone.data.models.Article;
 import africa.semicolon.blogClone.data.models.Blog;
 import africa.semicolon.blogClone.data.repositories.UserRepository;
 import africa.semicolon.blogClone.dtos.requests.AddArticleRequest;
@@ -81,6 +80,32 @@ class UserServicesImplTest {
         assertTrue(loginUserResponse.getIsSuccessful());
 
     }
+    @Test void userCanCreateABlog(){
+        request.setEmail("username2");
+        request.setPassword("password2");
+        response= userService.registerUser(request);
+        assertEquals(1, userRepository.count());
+
+        userLoginRequest.setEmail("username2");
+        userLoginRequest.setPassword("password2");
+        loginUserResponse =userService.userLogin(userLoginRequest);
+        assertTrue(loginUserResponse.getIsSuccessful());
+
+        addBlogRequest.setBlogName("blogName");
+        addBlogRequest.setDescription("description");
+        List<String>  tagsList = new ArrayList<String>();
+        tagsList.add("tags1");
+        tagsList.add("tags2");
+        tagsList.add("tags3");
+        addBlogRequest.setTags(tagsList);
+        addBlogRequest.setEmail(loginUserResponse.getEmail());
+
+        userService.createBlog(addBlogRequest);
+       Blog userBlog = userService.getUserBlogDetails(loginUserResponse.getUserId());
+
+        assertNotNull(userBlog);
+
+    }
     @Test
     public void  listAllUserBlogArticles() {
         request.setEmail("username2");
@@ -118,6 +143,7 @@ class UserServicesImplTest {
 
        AppUserArticleResponse articles = userService.getUserAllArticlesList(loginUserResponse.getEmail());
         System.out.println(articles);
+        assertEquals(1, articles.getArticles().size());
 
 
     }
@@ -155,8 +181,61 @@ class UserServicesImplTest {
 
         userService.createArticle(addArticleRequest);
         
-       SingleUserArticleResponse response = userService.getArticle("articleTitle");
+       SingleUserArticleResponse response = userService.getArticleInUserBlog("articleTitle");
+       assertEquals("articleTitle", response.getTitle());
     }
-        
+    @Test
+    public void thatUserCanDeleteAArticle(){
+        request.setEmail("username2");
+        request.setPassword("password2");
+        response= userService.registerUser(request);
+        assertEquals(1, userRepository.count());
+
+        userLoginRequest.setEmail("username2");
+        userLoginRequest.setPassword("password2");
+        loginUserResponse =userService.userLogin(userLoginRequest);
+        assertTrue(loginUserResponse.getIsSuccessful());
+
+        addBlogRequest.setBlogName("blogName");
+        addBlogRequest.setDescription("description");
+        List<String>  tagsList = new ArrayList<String>();
+        tagsList.add("tags1");
+        tagsList.add("tags2");
+        tagsList.add("tags3");
+        addBlogRequest.setTags(tagsList);
+        addBlogRequest.setEmail(loginUserResponse.getEmail());
+
+        userService.createBlog(addBlogRequest);
+
+
+
+        addArticleRequest.setTitle("articleTitle");
+        addArticleRequest.setAuthor("articleAuthor");
+        addArticleRequest.setDescription("articleDescription");
+        addArticleRequest.setBody("articleBody");
+        addArticleRequest.setEmail(loginUserResponse.getEmail());
+
+        userService.createArticle(addArticleRequest);
+
+
+        addArticleRequest.setTitle("articleTitle1");
+        addArticleRequest.setAuthor("articleAuthor1");
+        addArticleRequest.setDescription("articleDescription1");
+        addArticleRequest.setBody("articleBody1");
+        addArticleRequest.setEmail(loginUserResponse.getEmail());
+
+        userService.createArticle(addArticleRequest);
+
+
+        AppUserArticleResponse articles = userService.getUserAllArticlesList(loginUserResponse.getEmail());
+        System.out.println(articles);
+        assertEquals(2, articles.getArticles().size());
+
+        userService.deleteArticleInUserBlog("articleTitle");
+
+        assertEquals(1, articles.getArticles().size());
+
+
+    }
 
 }

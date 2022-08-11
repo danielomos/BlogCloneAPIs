@@ -1,6 +1,7 @@
 package africa.semicolon.blogClone.services;
 
 import africa.semicolon.blogClone.data.models.Article;
+import africa.semicolon.blogClone.data.models.Blog;
 import africa.semicolon.blogClone.data.models.User;
 import africa.semicolon.blogClone.data.repositories.ArticleRepository;
 import africa.semicolon.blogClone.exceptions.BlogCloneErrorException;
@@ -15,6 +16,9 @@ import java.util.Optional;
 public class ArticleServiceImpl implements ArticleService{
     @Autowired
     ArticleRepository  articleRepository;
+
+    @Autowired
+    BlogService blogService;
 
     @Override
     public Article saveArticle(Article newArticle) {
@@ -65,7 +69,9 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public void deleteArticleInaBlog(String title) {
         Article articleToDelete = getArticleInDb(title);
+
         articleRepository.delete(articleToDelete);
+
 
     }
 //    private  Article findArticleByTitle(String title) {

@@ -67,6 +67,7 @@ public class UserServicesImpl implements UserService{
             loginMessage.setIsSuccessful(true);
             loginMessage.setEmail(foundUser.getUserName());
             loginMessage.setMessage(String.format("%s successfully login", foundUser.getUserName()));
+            loginMessage.setUserId(foundUser.getId());
             return loginMessage ;
         }
 
@@ -113,6 +114,7 @@ public class UserServicesImpl implements UserService{
             userRepository.save(user);
             AddBlogResponse addBlogResponse = new AddBlogResponse();
             addBlogResponse.setMessage((String.format("you have successfully created a new blog of %s",  inBlog.getBlogName())));
+
             return addBlogResponse;
         }
 
@@ -143,15 +145,16 @@ public class UserServicesImpl implements UserService{
         return addAArticleResponse;
 
     }
-    public User getUserId(String userId) {
-        User user = userRepository.findUserById(userId);
-        return user;
+    public List<User> getAllUser() {
+        List<User> users = new ArrayList<User>();
+        users = userRepository.findAll();
+        return users;
     }
 
     @Override
     public AppUserArticleResponse getUserAllArticlesList(String email) {
         String userId = convertUserEmailToID(email);
-        User user = getUserId(userId);
+        User user = getUserDetailsWithId(userId);
         if (articleService.getArticleCount(user) == 0) {
             throw new BlogCloneErrorException(String.format("%s currently has no articles", user.getUserName()));
         }
@@ -179,7 +182,7 @@ public class UserServicesImpl implements UserService{
     }
 
     @Override
-    public SingleUserArticleResponse getArticleInaBlog(String title) {
+    public SingleUserArticleResponse getArticleInUserBlog(String title) {
 
           Article article = articleService.getArticleInDb(title);
           SingleUserArticleResponse articleResponse = new SingleUserArticleResponse();
@@ -189,8 +192,9 @@ public class UserServicesImpl implements UserService{
     }
 
     @Override
-    public DeleteArticleResponse deleteArticleInaBlog(String title) {
+    public DeleteArticleResponse deleteArticleInUserBlog(String title) {
         articleService.deleteArticleInaBlog(title);
+        blogService.deleteArticleInaBlog(title);
         DeleteArticleResponse deleteArticleResponse = new DeleteArticleResponse();
         deleteArticleResponse.setMassage(String.format("%s successfully deleted", title));
         return  deleteArticleResponse;
@@ -205,7 +209,7 @@ public class UserServicesImpl implements UserService{
         return addCommentResponse;
     }
 
-    private Blog getUserBlogDetails(String userId) {
+    public Blog getUserBlogDetails(String userId) {
         User user = userRepository.findUserById(userId);
         Blog userBlog = user.getBlog();
 //        Blog userBlog = blogService.getUserBlog(blog);

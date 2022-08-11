@@ -3,7 +3,6 @@ package africa.semicolon.blogClone.controllers;
 import africa.semicolon.blogClone.dtos.requests.*;
 import africa.semicolon.blogClone.dtos.responses.*;
 import africa.semicolon.blogClone.exceptions.BlogCloneErrorException;
-import africa.semicolon.blogClone.exceptions.BlogNotCreatedException;
 import africa.semicolon.blogClone.exceptions.WrongLoginDetails;
 import africa.semicolon.blogClone.services.ArticleService;
 import africa.semicolon.blogClone.services.BlogService;
@@ -13,9 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.List;
 
 @RestController
 public class UserController {
@@ -46,7 +42,7 @@ public class UserController {
         try{
             LoginUserResponse loginUserResponse = userService.userLogin(userLoginRequest);
 
-            return new ResponseEntity<>(loginUserResponse.getMessage(), HttpStatus.OK);
+            return new ResponseEntity<>(loginUserResponse, HttpStatus.OK);
         }
         catch (WrongLoginDetails err) {
             return new ResponseEntity<>(err.getMessage(), HttpStatus.UNAUTHORIZED);
@@ -88,7 +84,7 @@ public class UserController {
     @GetMapping("user/blog/article/viewarticle/{title}")
     public ResponseEntity<?>     getArticle(@PathVariable String title){
         try{
-            SingleUserArticleResponse response = userService.getArticleInaBlog(title);
+            SingleUserArticleResponse response = userService.getArticleInUserBlog(title);
             return new ResponseEntity<>(response,HttpStatus.FOUND);
         }catch (BlogCloneErrorException err) {
             return new ResponseEntity<>(err.getMessage(), HttpStatus.BAD_REQUEST);
@@ -98,7 +94,7 @@ public class UserController {
     @DeleteMapping("user/blog/article/delete/{title}")
     public ResponseEntity<?> deleteArticleInaBlog(@PathVariable String title){
         try{
-            DeleteArticleResponse response = userService.deleteArticleInaBlog(title);
+            DeleteArticleResponse response = userService.deleteArticleInUserBlog(title);
             return new ResponseEntity<>(response, HttpStatus.FOUND);
         }catch(BlogCloneErrorException err){
             return new ResponseEntity<>(err.getMessage(), HttpStatus.UNAUTHORIZED);
