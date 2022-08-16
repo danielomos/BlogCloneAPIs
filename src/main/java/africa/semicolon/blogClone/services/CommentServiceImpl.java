@@ -17,7 +17,7 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentRepository commentRepository;
     @Autowired
-    ArticleService articleService;
+    private ArticleService articleService;
     @Override
     public Comments addCommit(AddCommentRequest addCommitRequest) {
         Article article = articleService.getArticleInDb(addCommitRequest.getArticleTitle());

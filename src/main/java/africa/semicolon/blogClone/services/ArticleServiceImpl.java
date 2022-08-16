@@ -17,8 +17,8 @@ public class ArticleServiceImpl implements ArticleService{
     @Autowired
     ArticleRepository  articleRepository;
 
-    @Autowired
-    BlogService blogService;
+//    @Autowired
+//    BlogService blogService;
 
     @Override
     public Article saveArticle(Article newArticle) {
@@ -51,11 +51,11 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public Article getArticleInDb(String title) {
 
-        if (articleRepository.findAll().
-                stream().noneMatch(((article -> article.getTitle().equalsIgnoreCase(title))))) {
-            throw new BlogCloneErrorException("article not found");
-
-        }
+//        if (articleRepository.findAll().
+//                stream().noneMatch(((article -> article.getTitle().equalsIgnoreCase(title))))) {
+//            throw new BlogCloneErrorException("article not found");
+//
+//        }
         Article article = new Article();
         List<Article> articles = getArticleList();
         for (Article eachArticle : articles) {
@@ -74,9 +74,11 @@ public class ArticleServiceImpl implements ArticleService{
 
 
     }
-//    private  Article findArticleByTitle(String title) {
-//        articleRepository.findArticleByTitle(title)
-//    }
+    @Override
+    public Article findArticleByTitle(String title) {
+     Article article = articleRepository.findArticleByTitle(title);
+     return article;
+    }
 
 
 }

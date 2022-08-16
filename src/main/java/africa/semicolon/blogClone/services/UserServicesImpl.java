@@ -29,7 +29,7 @@ public class UserServicesImpl implements UserService{
     private BlogService blogService;
 
     @Autowired
-    CommentService commentService;
+   private CommentService commentService;
 
     @Override
     public RegisterUserResponse registerUser(RegisterUserRequest request) {
@@ -92,6 +92,13 @@ public class UserServicesImpl implements UserService{
     }
 
     @Override
+    public List<User> getAllUser() {
+        List<User> users = new ArrayList<User>();
+        users = userRepository.findAll();
+        return users;
+    }
+
+    @Override
     public void save(User userToSave) {
         userRepository.save(userToSave);
 
@@ -145,11 +152,7 @@ public class UserServicesImpl implements UserService{
         return addAArticleResponse;
 
     }
-    public List<User> getAllUser() {
-        List<User> users = new ArrayList<User>();
-        users = userRepository.findAll();
-        return users;
-    }
+
 
     @Override
     public AppUserArticleResponse getUserAllArticlesList(String email) {

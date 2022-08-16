@@ -21,6 +21,7 @@ public interface ArticleService {
     Article getArticleInDb(String articleId);
 
     void deleteArticleInaBlog(String title);
+    public Article findArticleByTitle(String title);
 
 
 }
