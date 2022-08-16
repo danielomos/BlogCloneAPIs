@@ -75,7 +75,7 @@
       <recent name="africa.semicolon.blogClone.data.repositories" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.UserServicesImplTest.thatUserCanDeleteAArticle">
+  <component name="RunManager" selected="JUnit.UserServicesImplTest">
     <configuration name="UserServicesImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="blogClone" />
       <extension name="coverage">
@@ -157,10 +157,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.UserServicesImplTest" />
         <item itemvalue="JUnit.UserServicesImplTest.thatUserCanDeleteAArticle" />
         <item itemvalue="JUnit.UserServicesImplTest.thatUserCanViewAArticle" />
         <item itemvalue="JUnit.UserServicesImplTest.listAllUserBlogArticles" />
-        <item itemvalue="JUnit.UserServicesImplTest" />
         <item itemvalue="JUnit.UserServicesImplTest.userCanCreateABlog" />
       </list>
     </recent_temporary>
