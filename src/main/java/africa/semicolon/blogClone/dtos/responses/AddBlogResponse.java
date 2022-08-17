@@ -4,7 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
+
 public class AddBlogResponse {
     private String message;
+    private String blogId;
+
 }

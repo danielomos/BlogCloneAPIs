@@ -7,14 +7,11 @@
     <list default="true" id="19a46cfb-add5-4ebc-adfe-a5cead2e9108" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/data/models/Article.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/data/models/Article.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/data/models/Comments.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/data/models/Comments.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/data/repositories/ArticleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/data/repositories/ArticleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/dtos/responses/AddBlogResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/dtos/responses/AddBlogResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/ArticleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/ArticleService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/ArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/ArticleServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/BlogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/BlogService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/BlogServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/BlogServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/CommentServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/UserServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/africa/semicolon/blogClone/services/UserServicesImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/africa/semicolon/blogClone/services/UserServicesImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/africa/semicolon/blogClone/services/UserServicesImplTest.java" afterDir="false" />
@@ -200,7 +197,10 @@
       <workItem from="1660201343208" duration="2288000" />
       <workItem from="1660205715593" duration="8790000" />
       <workItem from="1660654863477" duration="658000" />
-      <workItem from="1660676713148" duration="6974000" />
+      <workItem from="1660676713148" duration="12828000" />
+      <workItem from="1660714417422" duration="2373000" />
+      <workItem from="1660718454813" duration="451000" />
+      <workItem from="1660721168972" duration="1220000" />
     </task>
     <servers />
   </component>

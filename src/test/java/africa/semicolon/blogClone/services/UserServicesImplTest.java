@@ -205,7 +205,7 @@ class UserServicesImplTest {
         addBlogRequest.setTags(tagsList);
         addBlogRequest.setEmail(loginUserResponse.getEmail());
 
-        userService.createBlog(addBlogRequest);
+        addBlogResponse  = userService.createBlog(addBlogRequest);
 
 
 
@@ -231,7 +231,11 @@ class UserServicesImplTest {
         System.out.println(articles);
         assertEquals(2, articles.getArticles().size());
 
-        userService.deleteArticleInUserBlog("articleTitle");
+
+
+        userService.deleteArticleInUserBlog("articleTitle1",addBlogResponse.getBlogId());
+
+        System.out.println(articles);
 
         assertEquals(1, articles.getArticles().size());
 

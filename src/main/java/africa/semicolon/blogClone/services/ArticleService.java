@@ -20,7 +20,8 @@ public interface ArticleService {
 
     Article getArticleInDb(String articleId);
 
-    void deleteArticleInaBlog(String title);
+    void deleteArticleInaBlog(Article article);
+    void deleteArticleInaBlog(String id);
     public Article findArticleByTitle(String title);
 
 

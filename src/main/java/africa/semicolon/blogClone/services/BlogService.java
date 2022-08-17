@@ -21,4 +21,5 @@ public interface BlogService {
     public Blog getArticleBlog(Article article);
 
     void deleteArticleInaBlog(String title);
+    public String getArticle(String id, String title);
 }

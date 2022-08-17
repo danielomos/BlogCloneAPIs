@@ -91,10 +91,10 @@ public class UserController {
         }
 
     }
-    @DeleteMapping("user/blog/article/delete/{title}")
-    public ResponseEntity<?> deleteArticleInaBlog(@PathVariable String title){
+    @DeleteMapping("user/blog/article/delete/{title}{userId}")
+    public ResponseEntity<?> deleteArticleInaBlog(@PathVariable String title, String userId){
         try{
-            DeleteArticleResponse response = userService.deleteArticleInUserBlog(title);
+            DeleteArticleResponse response = userService.deleteArticleInUserBlog(title,userId);
             return new ResponseEntity<>(response, HttpStatus.FOUND);
         }catch(BlogCloneErrorException err){
             return new ResponseEntity<>(err.getMessage(), HttpStatus.UNAUTHORIZED);

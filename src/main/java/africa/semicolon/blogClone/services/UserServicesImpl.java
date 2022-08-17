@@ -121,6 +121,7 @@ public class UserServicesImpl implements UserService{
             userRepository.save(user);
             AddBlogResponse addBlogResponse = new AddBlogResponse();
             addBlogResponse.setMessage((String.format("you have successfully created a new blog of %s",  inBlog.getBlogName())));
+            addBlogResponse.setBlogId(savedBlog.getId());
 
             return addBlogResponse;
         }
@@ -195,9 +196,31 @@ public class UserServicesImpl implements UserService{
     }
 
     @Override
-    public DeleteArticleResponse deleteArticleInUserBlog(String title) {
-        articleService.deleteArticleInaBlog(title);
-        blogService.deleteArticleInaBlog(title);
+    public DeleteArticleResponse deleteArticleInUserBlog(String title,String blogId) {
+//        Blog blog = blogService.getBlogById(blogId);
+
+        String articleId = blogService.getArticle(blogId,title);
+        Article article = articleService.getArticleInDb(articleId);
+        articleService.deleteArticleInaBlog(articleId);
+
+
+
+//
+//        List<Article> articles = blog.getArticles();
+//        for (Article article : articles) {
+//           if( article.getTitle().equalsIgnoreCase(title)) {
+////                articles.remove(article);
+////              blog.setArticles(articles);
+////              blogService.saveBlog(blog);
+//
+//                Article foundarticle = article;
+//               articleService.deleteArticleInaBlog(article.getId());
+//           }
+//        }
+
+
+////        articleService.deleteArticleInaBlog(title);
+//        blogService.deleteArticleInaBlog(title);
         DeleteArticleResponse deleteArticleResponse = new DeleteArticleResponse();
         deleteArticleResponse.setMassage(String.format("%s successfully deleted", title));
         return  deleteArticleResponse;

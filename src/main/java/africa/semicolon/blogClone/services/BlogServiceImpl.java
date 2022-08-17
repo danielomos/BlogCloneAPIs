@@ -75,11 +75,19 @@ public class BlogServiceImpl implements BlogService {
         Blog blogArticleBelongTo =  getArticleBlog(articleFromDb);
         blogArticleBelongTo.getArticles().remove(articleFromDb);
 
-
-
-
-
     }
+@Override
+    public String getArticle(String id, String title){
+        Blog blog = getBlogById(id);
+        List<Article> articles = blog.getArticles();
+        for(Article article : articles) {
+            if (article.getTitle().equalsIgnoreCase(title)) {
+                String articleId = article.getId();
+                return  articleId;
+            }
+        }
+       return null;
+}
 
 
 }

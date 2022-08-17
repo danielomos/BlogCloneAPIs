@@ -61,18 +61,22 @@ public class ArticleServiceImpl implements ArticleService{
         for (Article eachArticle : articles) {
             if (eachArticle.getTitle().equalsIgnoreCase(title))
              article = eachArticle;
+            return article;
         }
 
-    return article;
+  return null;
     }
-
     @Override
-    public void deleteArticleInaBlog(String title) {
-        Article articleToDelete = getArticleInDb(title);
-
-        articleRepository.delete(articleToDelete);
+    public void deleteArticleInaBlog(String id) {
 
 
+        articleRepository.deleteById(id);
+    }
+    @Override
+    public void deleteArticleInaBlog(Article article) {
+//        Article articleToDelete = getArticleInDb(title);
+
+        articleRepository.delete(article);
     }
     @Override
     public Article findArticleByTitle(String title) {
