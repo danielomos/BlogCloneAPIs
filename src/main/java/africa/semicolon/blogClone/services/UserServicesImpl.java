@@ -42,6 +42,7 @@ public class UserServicesImpl implements UserService{
         userRepository.save(user);
         RegisterUserResponse response = new RegisterUserResponse();
         response.setMessage(String.format("%s successfully registered", request.getEmail()));
+        response.setUserId(user.getId());
         return response;
     }
 
@@ -134,6 +135,9 @@ public class UserServicesImpl implements UserService{
         User user = new User();
         user.setUserName(email);
        User userId = userRepository.findUserByUserName(user.getUserName());
+//       System.out.println(email );
+//       System.out.println(user.getUserName() + user.getId());
+
         return userId.getId();
 
     }
@@ -150,6 +154,8 @@ public class UserServicesImpl implements UserService{
         blogService.saveBlog(userBlog);
         AddAArticleResponse addAArticleResponse = new AddAArticleResponse();
         addAArticleResponse.setMessage("Article saved successfully");
+        addAArticleResponse.setArticleId(savedArticle.getId());
+
         return addAArticleResponse;
 
     }
@@ -157,24 +163,36 @@ public class UserServicesImpl implements UserService{
 
     @Override
     public AppUserArticleResponse getUserAllArticlesList(String email) {
-        String userId = convertUserEmailToID(email);
-        User user = getUserDetailsWithId(userId);
+//        String userId = convertUserEmailToID(email);
+
+//        User user = getUserDetailsWithId(userId);
+        User user = userRepository.findUserByUserName(email);
         if (articleService.getArticleCount(user) == 0) {
             throw new BlogCloneErrorException(String.format("%s currently has no articles", user.getUserName()));
         }
-        Blog blog = getUserBlogDetails(userId);
 
-        List<Article> userBlogArticles = blogService.getArticlesInaBlog(blog);
-        List<UserArticleListResponse> response = new ArrayList<UserArticleListResponse>();
 
-        for(Article article : userBlogArticles) {
-            UserArticleListResponse eachResponse = new UserArticleListResponse();
-            Mapper.map(article, eachResponse);
-            response.add(eachResponse);
-
-        }
+//        Blog blog = getUserBlogDetails(user.getId());
+        Blog blog = blogService.getBlogById(user.getBlog().getId());
+        List<Article> userBlogArticles = blog.getArticles();
+//        System.out.println(userBlogArticles.size());
         AppUserArticleResponse appUserArticleResponse = new AppUserArticleResponse();
-        appUserArticleResponse.setArticles(response);
+        appUserArticleResponse.setArticles(userBlogArticles);
+//        System.out.println(appUserArticleResponse.getArticles().size());
+
+
+
+//        List<Article> userBlogArticles = blogService.getArticlesInaBlog(blog);
+//        List<UserArticleListResponse> response = new ArrayList<UserArticleListResponse>();
+//
+//        for(Article article : userBlogArticles) {
+//            UserArticleListResponse eachResponse = new UserArticleListResponse();
+//            Mapper.map(article, eachResponse);
+//            response.add(eachResponse);
+//
+//        }
+//        AppUserArticleResponse appUserArticleResponse = new AppUserArticleResponse();
+//        appUserArticleResponse.setArticles(response);
 
 
         return appUserArticleResponse;
@@ -186,9 +204,9 @@ public class UserServicesImpl implements UserService{
     }
 
     @Override
-    public SingleUserArticleResponse getArticleInUserBlog(String title) {
+    public SingleUserArticleResponse getArticleInUserBlog(String id) {
 
-          Article article = articleService.getArticleInDb(title);
+          Article article = articleService.getArticleInDb(id);
           SingleUserArticleResponse articleResponse = new SingleUserArticleResponse();
           Mapper.map(article, articleResponse);
         return articleResponse;
@@ -196,12 +214,32 @@ public class UserServicesImpl implements UserService{
     }
 
     @Override
-    public DeleteArticleResponse deleteArticleInUserBlog(String title,String blogId) {
-//        Blog blog = blogService.getBlogById(blogId);
+    public DeleteArticleResponse deleteArticleInUserBlog(DeleteArticleRequest request) {
 
-        String articleId = blogService.getArticle(blogId,title);
-        Article article = articleService.getArticleInDb(articleId);
+//        System.out.println(blogId);
+        Blog blog = blogService.getBlogById(request.getBlogId());
+//        System.out.println(blog.getId());
+//        System.out.println(title);
+        String articleId = blogService.getArticle(request.getBlogId(),request.getArticleTitle());
+//    System.out.println(articleId);
+        Article article = articleService.findArticleById(articleId);
+//        System.out.println(articleService.count());
+//        System.out.println(article.getId());
+//        System.out.println(article.getTitle());
+//        List<Article> articles =blog.getArticles();
+//       articles.remove(article);
+//        blogService.saveBlog(blog);
+//        articleService.deleteArticleInaBlog(articleId);
+ List<Article> listAllUserBlogArticles = blog.getArticles();
         articleService.deleteArticleInaBlog(articleId);
+
+//        System.out.println(listAllUserBlogArticles.size());
+ listAllUserBlogArticles.remove(article);
+// System.out.println(listAllUserBlogArticles.size());
+ blog.setArticles(listAllUserBlogArticles);
+ blogService.saveBlog(blog);
+
+// System.out.println(blog.getArticles().size());
 
 
 
@@ -214,7 +252,7 @@ public class UserServicesImpl implements UserService{
 ////              blogService.saveBlog(blog);
 //
 //                Article foundarticle = article;
-//               articleService.deleteArticleInaBlog(article.getId());
+//               articleService.deleteArticleInaBlog(article.get.Id());
 //           }
 //        }
 
@@ -222,7 +260,8 @@ public class UserServicesImpl implements UserService{
 ////        articleService.deleteArticleInaBlog(title);
 //        blogService.deleteArticleInaBlog(title);
         DeleteArticleResponse deleteArticleResponse = new DeleteArticleResponse();
-        deleteArticleResponse.setMassage(String.format("%s successfully deleted", title));
+        deleteArticleResponse.setMassage(String.format("%s successfully deleted", request.getArticleTitle()));
+        deleteArticleResponse.setCount(blog.getArticles().size());
         return  deleteArticleResponse;
     }
 

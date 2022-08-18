@@ -49,22 +49,23 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     @Override
-    public Article getArticleInDb(String title) {
+    public Article getArticleInDb(String id) {
 
-//        if (articleRepository.findAll().
-//                stream().noneMatch(((article -> article.getTitle().equalsIgnoreCase(title))))) {
-//            throw new BlogCloneErrorException("article not found");
-//
-//        }
+        if (articleRepository.findAll().
+                stream().noneMatch(((article -> article.getId().equalsIgnoreCase(id))))) {
+            throw new BlogCloneErrorException("article not found");
+
+        }
         Article article = new Article();
         List<Article> articles = getArticleList();
         for (Article eachArticle : articles) {
-            if (eachArticle.getTitle().equalsIgnoreCase(title))
+            if (eachArticle.getId().equalsIgnoreCase(id))
              article = eachArticle;
-            return article;
+
         }
 
-  return null;
+  return article;
+
     }
     @Override
     public void deleteArticleInaBlog(String id) {
@@ -84,5 +85,15 @@ public class ArticleServiceImpl implements ArticleService{
      return article;
     }
 
+@Override
+    public Article findArticleById(String id) {
+        Article article = articleRepository.findArticleById(id);
+        return article;
+}
 
+@Override
+    public Long count (){
+       Long count =  articleRepository.count();
+       return count;
+}
 }

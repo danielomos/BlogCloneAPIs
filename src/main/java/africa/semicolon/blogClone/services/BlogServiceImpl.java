@@ -32,6 +32,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog getBlogById(String id) {
+
         Blog blog = blogRepository.findBlogById(id);
         return blog;
     }
@@ -82,12 +83,14 @@ public class BlogServiceImpl implements BlogService {
         List<Article> articles = blog.getArticles();
         for(Article article : articles) {
             if (article.getTitle().equalsIgnoreCase(title)) {
-                String articleId = article.getId();
-                return  articleId;
+                return article.getId();
             }
         }
        return null;
 }
+
+
+
 
 
 }

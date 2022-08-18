@@ -1,6 +1,9 @@
 package africa.semicolon.blogClone.services;
 
 import africa.semicolon.blogClone.data.models.Blog;
+import africa.semicolon.blogClone.data.models.User;
+import africa.semicolon.blogClone.data.repositories.ArticleRepository;
+import africa.semicolon.blogClone.data.repositories.BlogRepository;
 import africa.semicolon.blogClone.data.repositories.UserRepository;
 import africa.semicolon.blogClone.dtos.requests.AddArticleRequest;
 import africa.semicolon.blogClone.dtos.requests.AddBlogRequest;
@@ -23,6 +26,9 @@ class UserServicesImplTest {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private ArticleRepository articleRepository;
+    private ArticleService articleService;
     @Autowired
     private UserRepository userRepository;
     private RegisterUserRequest request;
@@ -53,6 +59,8 @@ class UserServicesImplTest {
     @AfterEach
     void tearDown() {
         userService.clearDatabases();
+//        articleService.clearDatabases();
+
 
 
     }
@@ -142,7 +150,7 @@ class UserServicesImplTest {
 
 
        AppUserArticleResponse articles = userService.getUserAllArticlesList(loginUserResponse.getEmail());
-        System.out.println(articles);
+//        System.out.println(articles);
         assertEquals(1, articles.getArticles().size());
 
 
@@ -179,10 +187,10 @@ class UserServicesImplTest {
         addArticleRequest.setBody("articleBody");
         addArticleRequest.setEmail(loginUserResponse.getEmail());
 
-        userService.createArticle(addArticleRequest);
+        AddAArticleResponse articleResponse = userService.createArticle(addArticleRequest);
 
-       SingleUserArticleResponse response = userService.getArticleInUserBlog("articleTitle");
-       assertEquals("articleTitle", response.getTitle());
+       SingleUserArticleResponse response = userService.getArticleInUserBlog(articleResponse.getArticleId());
+       assertEquals(articleResponse.getArticleId(), response.getId());
     }
     @Test
     public void thatUserCanDeleteAArticle(){
@@ -205,9 +213,9 @@ class UserServicesImplTest {
         addBlogRequest.setTags(tagsList);
         addBlogRequest.setEmail(loginUserResponse.getEmail());
 
-        addBlogResponse  = userService.createBlog(addBlogRequest);
+        AddBlogResponse blogResponse  = userService.createBlog(addBlogRequest);
 
-
+//        System.out.println(blogResponse.getBlogId());
 
         addArticleRequest.setTitle("articleTitle");
         addArticleRequest.setAuthor("articleAuthor");
@@ -228,16 +236,18 @@ class UserServicesImplTest {
 
 
         AppUserArticleResponse articles = userService.getUserAllArticlesList(loginUserResponse.getEmail());
-        System.out.println(articles);
+
         assertEquals(2, articles.getArticles().size());
+//        User user = userRepository.findUserById(loginUserResponse.getUserId());
 
 
 
-        userService.deleteArticleInUserBlog("articleTitle1",addBlogResponse.getBlogId());
 
-        System.out.println(articles);
+       DeleteArticleResponse deleteResponse = userService.deleteArticleInUserBlog("articleTitle", blogResponse.getBlogId());
+//        System.out.println( articleRepository.count());
+//        System.out.println(user.getBlog().getArticles().size());
 
-        assertEquals(1, articles.getArticles().size());
+        assertEquals(1, deleteResponse.getCount());
 
 
     }

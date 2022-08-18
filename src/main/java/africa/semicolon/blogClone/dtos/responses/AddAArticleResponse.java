@@ -5,5 +5,6 @@ import lombok.Data;
 @Data
 public class AddAArticleResponse {
     private String Message;
+    private String articleId;
 
 }

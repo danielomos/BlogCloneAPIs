@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterUserResponse {
     private String Message;
-
+    private String userId;
 
 }

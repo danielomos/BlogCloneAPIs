@@ -23,6 +23,7 @@ public interface ArticleService {
     void deleteArticleInaBlog(Article article);
     void deleteArticleInaBlog(String id);
     public Article findArticleByTitle(String title);
-
+    public Article findArticleById(String id);
+    public Long count ();
 
 }

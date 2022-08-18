@@ -52,7 +52,7 @@ public class UserController {
     public ResponseEntity<?> CreateBlog(@RequestBody AddBlogRequest addBlogRequest){
         try{
             AddBlogResponse addBlogResponse = userService.createBlog(addBlogRequest);
-            return new ResponseEntity<>(addBlogResponse.getMessage(), HttpStatus.CREATED);
+            return new ResponseEntity<>(addBlogResponse, HttpStatus.CREATED);
         }
         catch (BlogCloneErrorException err){
             return  new ResponseEntity<>(err.getMessage(), HttpStatus.BAD_REQUEST);
@@ -81,21 +81,21 @@ public class UserController {
             return new ResponseEntity<>(err.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping("user/blog/article/viewarticle/{title}")
-    public ResponseEntity<?> getArticle(@PathVariable String title){
+    @GetMapping("user/blog/article/viewarticle/{id}")
+    public ResponseEntity<?> getArticle(@PathVariable String id){
         try{
-            SingleUserArticleResponse response = userService.getArticleInUserBlog(title);
+            SingleUserArticleResponse response = userService.getArticleInUserBlog(id);
             return new ResponseEntity<>(response,HttpStatus.FOUND);
         }catch (BlogCloneErrorException err) {
             return new ResponseEntity<>(err.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
     }
-    @DeleteMapping("user/blog/article/delete/{title}{userId}")
-    public ResponseEntity<?> deleteArticleInaBlog(@PathVariable String title, String userId){
+    @DeleteMapping("user/blog/article/delete")
+    public ResponseEntity<?> deleteArticleInaBlog(@RequestBody DeleteArticleRequest request){
         try{
-            DeleteArticleResponse response = userService.deleteArticleInUserBlog(title,userId);
-            return new ResponseEntity<>(response, HttpStatus.FOUND);
+            DeleteArticleResponse response = userService.deleteArticleInUserBlog(request);
+            return new ResponseEntity<>(response.getMassage(), HttpStatus.FOUND);
         }catch(BlogCloneErrorException err){
             return new ResponseEntity<>(err.getMessage(), HttpStatus.UNAUTHORIZED);
         }

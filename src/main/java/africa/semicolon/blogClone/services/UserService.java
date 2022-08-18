@@ -26,7 +26,7 @@ public interface UserService {
     public void clearDatabases();
 
     public SingleUserArticleResponse getArticleInUserBlog(String articleId);
-    public DeleteArticleResponse deleteArticleInUserBlog(String title,String blogId);
+    public DeleteArticleResponse deleteArticleInUserBlog(DeleteArticleRequest request);
 
      public AddCommentResponse AddCommitToArticle(AddCommentRequest addCommitRequest);
 
