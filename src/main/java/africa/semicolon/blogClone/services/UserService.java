@@ -1,8 +1,11 @@
 package africa.semicolon.blogClone.services;
 
+import africa.semicolon.blogClone.data.models.Blog;
 import africa.semicolon.blogClone.data.models.User;
 import africa.semicolon.blogClone.dtos.requests.*;
 import africa.semicolon.blogClone.dtos.responses.*;
+
+import java.util.List;
 
 public interface UserService {
     RegisterUserResponse registerUser(RegisterUserRequest request);
@@ -10,6 +13,7 @@ public interface UserService {
     LoginUserResponse userLogin(UserLoginRequest userLoginRequest);
 
      User getUserDetailsWithId(String userId);
+    public List<User> getAllUser();
 
 
     void save(User userToSave);
@@ -21,8 +25,13 @@ public interface UserService {
     AppUserArticleResponse getUserAllArticlesList(String userId );
     public void clearDatabases();
 
-    public SingleUserArticleResponse getArticleInaBlog(String articleId);
-     public DeleteArticleResponse deleteArticleInaBlog(String title);
+    public SingleUserArticleResponse getArticleInUserBlog(String articleId);
+    public DeleteArticleResponse deleteArticleInUserBlog(DeleteArticleRequest request);
 
      public AddCommentResponse AddCommitToArticle(AddCommentRequest addCommitRequest);
+
+    public Blog getUserBlogDetails(String userId);
+
+
+
 }

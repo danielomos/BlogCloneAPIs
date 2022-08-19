@@ -18,6 +18,9 @@ public class BlogServiceImpl implements BlogService {
     BlogRepository blogRepository;
     @Autowired
     ArticleService articleService;
+//
+//    @Autowired
+//    UserService userService;
 
 
     @Override
@@ -29,6 +32,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog getBlogById(String id) {
+
         Blog blog = blogRepository.findBlogById(id);
         return blog;
     }
@@ -45,6 +49,48 @@ public class BlogServiceImpl implements BlogService {
         return articles;
 
     }
+    public Blog getArticleBlog(Article article) {
+        Blog foundBlog = new Blog();
+        List<Blog> blogsInDb = getAllBlog();
+        for (Blog eachBlogInDb : blogsInDb) {
+            for(Article articleInBlog : eachBlogInDb.getArticles()){
+                if(articleInBlog.equals(article)){
+                    foundBlog = eachBlogInDb;
+                }
+            }
+        }
+        return foundBlog;
+    }
+
+    private List<Blog> getAllBlog() {
+        List<Blog> blogs = blogRepository.findAll();
+        return blogs;
+    }
+
+
+    @Override
+    public void deleteArticleInaBlog(String title) {
+//        Article articleFromDb = articleService.findArticleByTitle(title);
+
+        Article articleFromDb = articleService.getArticleInDb(title);
+        Blog blogArticleBelongTo =  getArticleBlog(articleFromDb);
+        blogArticleBelongTo.getArticles().remove(articleFromDb);
+
+    }
+@Override
+    public String getArticle(String id, String title){
+        Blog blog = getBlogById(id);
+        List<Article> articles = blog.getArticles();
+        for(Article article : articles) {
+            if (article.getTitle().equalsIgnoreCase(title)) {
+                return article.getId();
+            }
+        }
+       return null;
+}
+
+
+
 
 
 }

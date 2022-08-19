@@ -3,7 +3,6 @@ package africa.semicolon.blogClone.controllers;
 import africa.semicolon.blogClone.dtos.requests.*;
 import africa.semicolon.blogClone.dtos.responses.*;
 import africa.semicolon.blogClone.exceptions.BlogCloneErrorException;
-import africa.semicolon.blogClone.exceptions.BlogNotCreatedException;
 import africa.semicolon.blogClone.exceptions.WrongLoginDetails;
 import africa.semicolon.blogClone.services.ArticleService;
 import africa.semicolon.blogClone.services.BlogService;
@@ -13,9 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.List;
 
 @RestController
 public class UserController {
@@ -46,7 +42,7 @@ public class UserController {
         try{
             LoginUserResponse loginUserResponse = userService.userLogin(userLoginRequest);
 
-            return new ResponseEntity<>(loginUserResponse.getMessage(), HttpStatus.OK);
+            return new ResponseEntity<>(loginUserResponse, HttpStatus.OK);
         }
         catch (WrongLoginDetails err) {
             return new ResponseEntity<>(err.getMessage(), HttpStatus.UNAUTHORIZED);
@@ -56,7 +52,7 @@ public class UserController {
     public ResponseEntity<?> CreateBlog(@RequestBody AddBlogRequest addBlogRequest){
         try{
             AddBlogResponse addBlogResponse = userService.createBlog(addBlogRequest);
-            return new ResponseEntity<>(addBlogResponse.getMessage(), HttpStatus.CREATED);
+            return new ResponseEntity<>(addBlogResponse, HttpStatus.CREATED);
         }
         catch (BlogCloneErrorException err){
             return  new ResponseEntity<>(err.getMessage(), HttpStatus.BAD_REQUEST);
@@ -85,21 +81,21 @@ public class UserController {
             return new ResponseEntity<>(err.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping("user/blog/article/viewarticle/{title}")
-    public ResponseEntity<?>     getArticle(@PathVariable String title){
+    @GetMapping("user/blog/article/viewarticle/{id}")
+    public ResponseEntity<?> getArticle(@PathVariable String id){
         try{
-            SingleUserArticleResponse response = userService.getArticleInaBlog(title);
+            SingleUserArticleResponse response = userService.getArticleInUserBlog(id);
             return new ResponseEntity<>(response,HttpStatus.FOUND);
         }catch (BlogCloneErrorException err) {
             return new ResponseEntity<>(err.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
     }
-    @DeleteMapping("user/blog/article/delete/{title}")
-    public ResponseEntity<?> deleteArticleInaBlog(@PathVariable String title){
+    @DeleteMapping("user/blog/article/delete")
+    public ResponseEntity<?> deleteArticleInaBlog(@RequestBody DeleteArticleRequest request){
         try{
-            DeleteArticleResponse response = userService.deleteArticleInaBlog(title);
-            return new ResponseEntity<>(response, HttpStatus.FOUND);
+            DeleteArticleResponse response = userService.deleteArticleInUserBlog(request);
+            return new ResponseEntity<>(response.getMassage(), HttpStatus.FOUND);
         }catch(BlogCloneErrorException err){
             return new ResponseEntity<>(err.getMessage(), HttpStatus.UNAUTHORIZED);
         }

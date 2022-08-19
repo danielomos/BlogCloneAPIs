@@ -15,5 +15,11 @@ public interface BlogService {
 
     public void clearDatabases();
 
-    List<Article> getArticlesInaBlog(Blog blog);
+//    Blog getArticlesInaBlog(Blog blog);
+//    public List<Article> getArticlesInaBlog(Article article);
+    public List<Article> getArticlesInaBlog(Blog userBlog);
+    public Blog getArticleBlog(Article article);
+
+    void deleteArticleInaBlog(String title);
+    public String getArticle(String id, String title);
 }

@@ -1,6 +1,7 @@
 package africa.semicolon.blogClone.services;
 
 import africa.semicolon.blogClone.data.models.Article;
+import africa.semicolon.blogClone.data.models.Blog;
 import africa.semicolon.blogClone.data.models.User;
 import africa.semicolon.blogClone.data.repositories.ArticleRepository;
 import africa.semicolon.blogClone.exceptions.BlogCloneErrorException;
@@ -15,6 +16,9 @@ import java.util.Optional;
 public class ArticleServiceImpl implements ArticleService{
     @Autowired
     ArticleRepository  articleRepository;
+
+//    @Autowired
+//    BlogService blogService;
 
     @Override
     public Article saveArticle(Article newArticle) {
@@ -45,32 +49,51 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     @Override
-    public Article getArticleInDb(String title) {
+    public Article getArticleInDb(String id) {
 
         if (articleRepository.findAll().
-                stream().noneMatch(((article -> article.getTitle().equalsIgnoreCase(title))))) {
+                stream().noneMatch(((article -> article.getId().equalsIgnoreCase(id))))) {
             throw new BlogCloneErrorException("article not found");
 
         }
         Article article = new Article();
         List<Article> articles = getArticleList();
         for (Article eachArticle : articles) {
-            if (eachArticle.getTitle().equalsIgnoreCase(title))
+            if (eachArticle.getId().equalsIgnoreCase(id))
              article = eachArticle;
+
         }
 
-    return article;
-    }
+  return article;
 
+    }
     @Override
-    public void deleteArticleInaBlog(String title) {
-        Article articleToDelete = getArticleInDb(title);
-        articleRepository.delete(articleToDelete);
+    public void deleteArticleInaBlog(String id) {
 
+
+        articleRepository.deleteById(id);
     }
-//    private  Article findArticleByTitle(String title) {
-//        articleRepository.findArticleByTitle(title)
-//    }
+    @Override
+    public void deleteArticleInaBlog(Article article) {
+//        Article articleToDelete = getArticleInDb(title);
 
+        articleRepository.delete(article);
+    }
+    @Override
+    public Article findArticleByTitle(String title) {
+     Article article = articleRepository.findArticleByTitle(title);
+     return article;
+    }
 
+@Override
+    public Article findArticleById(String id) {
+        Article article = articleRepository.findArticleById(id);
+        return article;
+}
+
+@Override
+    public Long count (){
+       Long count =  articleRepository.count();
+       return count;
+}
 }
