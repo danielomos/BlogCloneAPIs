@@ -5,10 +5,7 @@ import africa.semicolon.blogClone.data.models.User;
 import africa.semicolon.blogClone.data.repositories.ArticleRepository;
 import africa.semicolon.blogClone.data.repositories.BlogRepository;
 import africa.semicolon.blogClone.data.repositories.UserRepository;
-import africa.semicolon.blogClone.dtos.requests.AddArticleRequest;
-import africa.semicolon.blogClone.dtos.requests.AddBlogRequest;
-import africa.semicolon.blogClone.dtos.requests.RegisterUserRequest;
-import africa.semicolon.blogClone.dtos.requests.UserLoginRequest;
+import africa.semicolon.blogClone.dtos.requests.*;
 import africa.semicolon.blogClone.dtos.responses.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,6 +39,7 @@ class UserServicesImplTest {
 
     private AddArticleRequest   addArticleRequest;
     private AddAArticleResponse addArticleResponse;
+    private DeleteArticleRequest deleteArticleRequest;
 
 
     @BeforeEach
@@ -55,6 +53,8 @@ class UserServicesImplTest {
      addBlogResponse = new AddBlogResponse();
      addArticleRequest = new AddArticleRequest();
      addArticleResponse = new AddAArticleResponse();
+     deleteArticleRequest = new DeleteArticleRequest();
+
     }
     @AfterEach
     void tearDown() {
@@ -240,10 +240,12 @@ class UserServicesImplTest {
         assertEquals(2, articles.getArticles().size());
 //        User user = userRepository.findUserById(loginUserResponse.getUserId());
 
+        deleteArticleRequest.setArticleTitle("articleTitle");
+        deleteArticleRequest.setBlogId(blogResponse.getBlogId());
 
 
 
-       DeleteArticleResponse deleteResponse = userService.deleteArticleInUserBlog("articleTitle", blogResponse.getBlogId());
+       DeleteArticleResponse deleteResponse = userService.deleteArticleInUserBlog(deleteArticleRequest);
 //        System.out.println( articleRepository.count());
 //        System.out.println(user.getBlog().getArticles().size());
 
